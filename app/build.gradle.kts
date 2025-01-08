@@ -48,4 +48,23 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Navigation Component
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Room components
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    androidTestImplementation(libs.androidx.room.testing)
+
+    // Lifecycle components
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation(libs.androidx.lifecycle.common.java8)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // Kotlin components
+    implementation(libs.kotlin.stdlib.jdk7)
+    api(libs.kotlinx.coroutines.core)
+    api(libs.kotlinx.coroutines.android)
 }
