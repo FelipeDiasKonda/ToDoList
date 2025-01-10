@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+
 }
 
 android {
     namespace = "com.example.todolist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.todolist"
@@ -35,6 +37,9 @@ android {
     }
     viewBinding{
         enable = true //ativar DataBinding
+    }
+    buildFeatures{
+        dataBinding = true
     }
 }
 
@@ -67,4 +72,5 @@ dependencies {
     implementation(libs.kotlin.stdlib.jdk7)
     api(libs.kotlinx.coroutines.core)
     api(libs.kotlinx.coroutines.android)
+
 }
