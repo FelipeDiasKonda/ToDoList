@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initRecyclerView()
 
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
+
         adapter = ActivityAdapter()
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
@@ -61,9 +61,11 @@ class MainActivity : AppCompatActivity() {
             loadingDialog.dismiss()
         },3000)
 
+
+
         binding.floatingActionButton.setOnClickListener {
             val dialog = AddTaskActivity()
-            dialog.show(supportFragmentManager,"AddActivityDialog")
+            dialog.show(supportFragmentManager,"AddActivity")
 
         }
     }

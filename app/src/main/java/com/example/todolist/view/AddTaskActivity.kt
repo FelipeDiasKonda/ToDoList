@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.todolist.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.example.todolist.databinding.DialogAddActivityBinding
+import com.example.todolist.databinding.AddActivityBinding
 import com.example.todolist.model.ActivityModel
 import com.example.todolist.viewmodel.ActivityViewModel
 import java.text.SimpleDateFormat
@@ -16,7 +15,7 @@ import java.util.UUID
 
 class AddTaskActivity: BottomSheetDialogFragment() {
 
-    private lateinit var _binding: DialogAddActivityBinding
+    private lateinit var _binding: AddActivityBinding
     private val binding get() = _binding
     private lateinit var activityViewModel: ActivityViewModel
 
@@ -24,7 +23,7 @@ class AddTaskActivity: BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DialogAddActivityBinding.inflate(inflater, container, false)
+        _binding = AddActivityBinding.inflate(inflater, container, false)
         return binding.root
     }
 
