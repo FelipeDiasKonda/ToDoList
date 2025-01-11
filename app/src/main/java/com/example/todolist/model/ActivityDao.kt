@@ -10,7 +10,7 @@ import androidx.room.Update
 
 @Dao
 interface ActivityDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addActivity(activityModel: ActivityModel)
 
     @Query("SELECT * FROM activity_table ORDER by Title ASC")
