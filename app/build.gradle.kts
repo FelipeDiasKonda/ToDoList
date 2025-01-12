@@ -41,6 +41,10 @@ android {
     buildFeatures{
         dataBinding = true
     }
+    kapt {
+        correctErrorTypes = true
+    }
+
 }
 
 dependencies {
@@ -61,6 +65,7 @@ dependencies {
     // Room components
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    kapt (libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.room.testing)
 
     // Lifecycle components

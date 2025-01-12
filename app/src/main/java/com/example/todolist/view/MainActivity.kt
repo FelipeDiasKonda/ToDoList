@@ -23,6 +23,7 @@ import com.example.todolist.model.ActivityModel
 import com.example.todolist.viewmodel.ActivityViewModel
 import com.example.todolist.model.ActivityAdapter
 import com.example.todolist.model.ActivityDatabase
+import com.example.todolist.viewmodel.ActivityViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
+
+        val application = requireNotNull(this).application
+        val factory = ActivityViewModelFactory(application)
+        activityViewModel = ViewModelProvider(this,factory).get(ActivityViewModel::class.java)
+
         initRecyclerView()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -61,13 +67,21 @@ class MainActivity : AppCompatActivity() {
             loadingDialog.dismiss()
         },3000)
 
-
-
         binding.floatingActionButton.setOnClickListener {
             val dialog = AddTaskActivity()
             dialog.show(supportFragmentManager,"AddActivity")
 
         }
+        activityViewModel.allActivities.observe(this, Observer { activities ->
+            if(activities.isNullOrEmpty()){
+                binding.emptyMessage.visibility = View.VISIBLE
+                binding.tasks.visibility = View.GONE
+            } else {
+                binding.emptyMessage.visibility = View.GONE
+                binding.tasks.visibility = View.VISIBLE
+                adapter.submitList(activities)
+            }
+        })
     }
 
 
