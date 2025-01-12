@@ -1,13 +1,16 @@
 package com.example.todolist.view
 
+import android.os.Build.VERSION_CODES.S
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.todolist.databinding.AddActivityBinding
 import com.example.todolist.model.ActivityModel
 import com.example.todolist.viewmodel.ActivityViewModel
+import com.example.todolist.viewmodel.ActivityViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -29,6 +32,11 @@ class AddTaskActivity: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val application = requireNotNull(this.activity).application
+        val factory = ActivityViewModelFactory(application)
+        activityViewModel = ViewModelProvider(this,factory).get(ActivityViewModel::class.java)
+
         binding.addActivityBtn.setOnClickListener {
             val id: UUID = UUID.randomUUID()
             val title = binding.AddTittle2.text.toString()
