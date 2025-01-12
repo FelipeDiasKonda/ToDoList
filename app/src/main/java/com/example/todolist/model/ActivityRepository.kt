@@ -21,5 +21,9 @@ class ActivityRepository(private val activityDao: ActivityDao) {
         activityDao.updateActivity(activity)
     }
 
+    suspend fun deleteAllActivities(){
+        activityDao.deleteAllActivities()
+    }
+
 
 }

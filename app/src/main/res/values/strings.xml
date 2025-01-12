@@ -10,4 +10,9 @@
     <string name="task_description_hint">Descrição</string>
     <string name="save">Salvar</string>
     <string name="cancel">Cancelar</string>
+    <string name="delete_message">Are you sure you want to delete this activity?</string>
+    <string name="delete_btn_txt">Delete</string>
+    <string name="description">Description</string>
+    <string name="created_date">Created Date</string>
+    <string name="feito">FEITO</string>
 </resources>

@@ -3,12 +3,15 @@ package com.example.todolist.model
 import ActivityDiffCallback
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ViewTaskLayoutBinding
+import com.example.todolist.viewmodel.ActivityViewModel
 
-class ActivityAdapter : ListAdapter<ActivityModel, ActivityAdapter.ActivityViewHolder>(ActivityDiffCallback()) {
+class ActivityAdapter(
+    private val activityViewModel: ActivityViewModel,
+    private val onItemLongClickListener: (ActivityModel) -> Unit
+) : ListAdapter<ActivityModel, ActivityAdapter.ActivityViewHolder>(ActivityDiffCallback()) {
 
     private val activityList = ArrayList<ActivityModel>()
 
@@ -18,6 +21,12 @@ class ActivityAdapter : ListAdapter<ActivityModel, ActivityAdapter.ActivityViewH
     }
 
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
+        val currentItem = getItem(position)
+        holder.bind(currentItem)
+        holder.itemView.setOnLongClickListener{
+            onItemLongClickListener(currentItem)
+            true
+        }
         val activity = getItem(position)
         holder.bind(activity)
     }
@@ -27,11 +36,10 @@ class ActivityAdapter : ListAdapter<ActivityModel, ActivityAdapter.ActivityViewH
             binding.titleTxt.text = activity.Title
             binding.descTxt.text = activity.Description
             binding.Createdate.text = activity.CreatedDate
-            binding.checkBox.isChecked = activity.Done
+            binding.checkBox.setOnCheckedChangeListener{_,isChecked ->
+                activity.Done = isChecked
+                activityViewModel.completeActivity(activity)
+            }
         }
-    }
-    fun updateList(newList: List<ActivityModel>){
-        activityList.clear()
-        activityList.addAll(newList)
     }
 }

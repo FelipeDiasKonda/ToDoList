@@ -1,17 +1,13 @@
 package com.example.todolist.view
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
@@ -19,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.R
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.databinding.DialogDeleteActivityBinding
 import com.example.todolist.model.ActivityModel
 import com.example.todolist.viewmodel.ActivityViewModel
 import com.example.todolist.model.ActivityAdapter
@@ -55,7 +52,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
 
-        adapter = ActivityAdapter()
+        //activityViewModel.deleteAllActivities()
+        adapter = ActivityAdapter(activityViewModel){
+            activity ->
+            showDeleteDialog(activity)
+        }
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
 
@@ -82,6 +83,20 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(activities)
             }
         })
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showDeleteDialog(activity: ActivityModel){
+        val dialogBinding = DialogDeleteActivityBinding.inflate(layoutInflater)
+        val dialog = Dialog(this)
+        dialog.setContentView(dialogBinding.root)
+        dialog.setCancelable(true)
+
+        dialogBinding.deleteButton.setOnClickListener{
+            activityViewModel.deleteActivity(activity)
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
 

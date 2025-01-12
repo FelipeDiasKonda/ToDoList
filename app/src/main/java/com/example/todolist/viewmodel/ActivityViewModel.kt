@@ -38,6 +38,12 @@ class ActivityViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    fun deleteAllActivities(){
+        viewModelScope.launch {
+            repository.deleteAllActivities()
+        }
+    }
+
 
 
 }
