@@ -11,5 +11,5 @@ data class ActivityModel(
     val Title: String,
     val Description: String,
     val CreatedDate: String,
-    var Done: Boolean = false
+    var Done: Boolean,
 )

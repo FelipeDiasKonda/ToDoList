@@ -3,6 +3,7 @@ package com.example.todolist.model
 import ActivityDiffCallback
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ViewTaskLayoutBinding
@@ -36,9 +37,16 @@ class ActivityAdapter(
             binding.titleTxt.text = activity.Title
             binding.descTxt.text = activity.Description
             binding.Createdate.text = activity.CreatedDate
+            if (activity.Done==true){
+                binding.checkBox.isChecked = true
+            }else{
+                binding.checkBox.isChecked = false
+            }
             binding.checkBox.setOnCheckedChangeListener{_,isChecked ->
-                activity.Done = isChecked
-                activityViewModel.completeActivity(activity)
+                if(isChecked){
+                    activityViewModel.completeActivity(activity)
+                }
+
             }
         }
     }

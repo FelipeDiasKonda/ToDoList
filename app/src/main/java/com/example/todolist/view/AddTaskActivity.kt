@@ -43,11 +43,16 @@ class AddTaskActivity: BottomSheetDialogFragment() {
             val description = binding.AddDesc2.text.toString()
             val createDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(
                 Date()
-
             )
             val newActivity = ActivityModel(id,title,description,createDate,false)
-            activityViewModel.addActivity(newActivity)
-            dismiss()
+            if (title == ""){
+                binding.AddTitle.hint = "Titulo é obrigatório"
+            }
+            else{
+                activityViewModel.addActivity(newActivity)
+                dismiss()
+            }
+
         }
     }
 
