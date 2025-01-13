@@ -42,9 +42,11 @@ class ActivityAdapter(
             }else{
                 binding.checkBox.isChecked = false
             }
-            binding.checkBox.setOnCheckedChangeListener{_,isChecked ->
+                binding.checkBox.setOnCheckedChangeListener{_,isChecked ->
                 if(isChecked){
                     activityViewModel.completeActivity(activity)
+                }else{
+                    activityViewModel.undoActivity(activity)
                 }
 
             }

@@ -32,6 +32,14 @@ class ActivityViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+
+    fun undoActivity(activity: ActivityModel){
+        activity.Done = false
+        viewModelScope.launch{
+            repository.updateActivity(activity)
+        }
+    }
+
     fun deleteActivity(activity: ActivityModel){
         viewModelScope.launch{
             repository.deleteActivity(activity)
