@@ -18,15 +18,15 @@ import java.util.UUID
 
 class AddTaskActivity: BottomSheetDialogFragment() {
 
-    private lateinit var _binding: AddActivityBinding
-    private val binding get() = _binding
+    private lateinit var binding: AddActivityBinding
+
     private lateinit var activityViewModel: ActivityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = AddActivityBinding.inflate(inflater, container, false)
+        binding = AddActivityBinding.inflate(inflater, container, false)
         return binding.root
     }
 

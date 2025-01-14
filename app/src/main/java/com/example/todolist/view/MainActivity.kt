@@ -1,6 +1,5 @@
 package com.example.todolist.view
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
@@ -24,23 +23,40 @@ import com.example.todolist.viewmodel.ActivityViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    lateinit var database: ActivityDatabase
-    private lateinit var activityViewModel: ActivityViewModel
-    private lateinit var adapter: ActivityAdapter
-    private lateinit var loadingDialog: Dialog
+    val database: ActivityDatabase by lazy{
+        ActivityDatabase.getDatabase(applicationContext)
+    }
+    private val activityViewModel: ActivityViewModel by lazy {
+        val application = requireNotNull(this).application
+        val factory = ActivityViewModelFactory(application)
+        ViewModelProvider(this, factory).get(ActivityViewModel::class.java)
+    }
+    private val adapter: ActivityAdapter by lazy{
+        ActivityAdapter(activityViewModel){
+                activity ->
+            showDeleteDialog(activity)
+        }
+    }
+    private val loadingDialog: Dialog by lazy {
+        Dialog(this).apply {
+            setContentView(R.layout.loading_page)
+            setCancelable(false)
+            show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                dismiss()
+            }, 3000)
+        }
+    }
+    private val binding: ActivityMainBinding by lazy{
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        val application = requireNotNull(this).application
-        val factory = ActivityViewModelFactory(application)
-        activityViewModel = ViewModelProvider(this,factory).get(ActivityViewModel::class.java)
-
-        initRecyclerView()
+        initSetup()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -50,24 +66,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun initRecyclerView() {
+    private fun initSetup() {
 
         //activityViewModel.deleteAllActivities()
-        adapter = ActivityAdapter(activityViewModel){
-            activity ->
-            showDeleteDialog(activity)
-        }
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
-
-        loadingDialog = Dialog(this)
-        loadingDialog.setContentView(R.layout.loading_page)
-        loadingDialog.setCancelable(false)
-        loadingDialog.show()
-        Handler(Looper.getMainLooper()).postDelayed({
-            loadingDialog.dismiss()
-        },3000)
-
+        loadingDialog
         binding.floatingActionButton.setOnClickListener {
             val dialog = AddTaskActivity()
             dialog.show(supportFragmentManager,"AddActivity")
@@ -85,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    @SuppressLint("InflateParams")
     private fun showDeleteDialog(activity: ActivityModel){
         val dialogBinding = DialogDeleteActivityBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
