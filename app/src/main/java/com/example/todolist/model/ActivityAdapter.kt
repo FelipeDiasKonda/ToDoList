@@ -37,19 +37,23 @@ class ActivityAdapter(
             binding.titleTxt.text = activity.Title
             binding.descTxt.text = activity.Description
             binding.Createdate.text = activity.CreatedDate
-            if (activity.Done==true){
-                binding.checkBox.isChecked = true
-            }else{
-                binding.checkBox.isChecked = false
+            binding.checkBox.setOnCheckedChangeListener(null)
+            binding.checkBox.isChecked = activity.Done
+
+            binding.root.setOnClickListener {
+                binding.checkBox.isChecked = !binding.checkBox.isChecked
             }
-                binding.checkBox.setOnCheckedChangeListener{_,isChecked ->
-                if(isChecked){
+
+
+            binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
                     activityViewModel.completeActivity(activity)
-                }else{
+                } else {
                     activityViewModel.undoActivity(activity)
                 }
-
             }
+
+
         }
     }
 }
