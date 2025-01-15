@@ -18,24 +18,25 @@ import java.util.UUID
 
 class AddTaskActivity: BottomSheetDialogFragment() {
 
-    private lateinit var binding: AddActivityBinding
+    private val binding: AddActivityBinding by lazy {
+        AddActivityBinding.inflate(layoutInflater)
+    }
 
-    private lateinit var activityViewModel: ActivityViewModel
+    private val activityViewModel: ActivityViewModel by lazy {
+        val application = requireNotNull(this.activity).application
+        val factory = ActivityViewModelFactory(application)
+        ViewModelProvider(this,factory).get(ActivityViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = AddActivityBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val application = requireNotNull(this.activity).application
-        val factory = ActivityViewModelFactory(application)
-        activityViewModel = ViewModelProvider(this,factory).get(ActivityViewModel::class.java)
 
         binding.addActivityBtn.setOnClickListener {
             val id: UUID = UUID.randomUUID()

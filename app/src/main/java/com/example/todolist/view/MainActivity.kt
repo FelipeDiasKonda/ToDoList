@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             show()
             Handler(Looper.getMainLooper()).postDelayed({
                 dismiss()
-            }, 3000)
+            }, 2000)
         }
     }
     private val binding: ActivityMainBinding by lazy{
