@@ -54,14 +54,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-
         initSetup()
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
     }
 
     private fun initSetup() {
@@ -82,7 +80,9 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.emptyMessage.visibility = View.GONE
                 binding.tasks.visibility = View.VISIBLE
-                adapter.submitList(activities)
+                adapter.submitList(activities){
+                    binding.tasks.scrollToPosition(0)
+                }
             }
         }
     }

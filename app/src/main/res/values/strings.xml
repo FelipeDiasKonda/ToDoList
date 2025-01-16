@@ -16,7 +16,7 @@
     <string name="description">Description</string>
     <string name="created_date">Created Date</string>
     <string name="feito">DONE</string>
-    <string name="required">Tittle is required</string>
+    <string name="required">Title is required</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 </resources>
