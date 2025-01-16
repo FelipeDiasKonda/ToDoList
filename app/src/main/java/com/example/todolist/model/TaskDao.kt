@@ -9,18 +9,18 @@ import androidx.room.Query
 import androidx.room.Update
 
 @Dao
-interface ActivityDao {
+interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addActivity(activityModel: ActivityModel)
+    suspend fun addActivity(activityModel: TaskModel)
 
-    @Query("SELECT * FROM activity_table ORDER by Title ASC")
-    fun readAllData(): LiveData<List<ActivityModel>>
+    @Query("SELECT * FROM activity_table ORDER by title ASC")
+    fun readAllData(): LiveData<List<TaskModel>>
 
     @Update
-    suspend fun updateActivity(activityModel: ActivityModel)
+    suspend fun updateActivity(activityModel: TaskModel)
 
     @Delete
-    suspend fun deleteActivity(activityModel: ActivityModel)
+    suspend fun deleteActivity(activityModel: TaskModel)
 
     @Query("DELETE FROM activity_table")
     suspend fun deleteAllActivities()

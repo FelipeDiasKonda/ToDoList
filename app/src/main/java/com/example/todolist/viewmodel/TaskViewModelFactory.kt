@@ -4,11 +4,11 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-class ActivityViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class TaskViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ActivityViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return ActivityViewModel(application) as T
+            return TaskViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -1,38 +1,32 @@
 package com.example.todolist.view
-
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.R
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.databinding.DialogDeleteActivityBinding
-import com.example.todolist.model.ActivityModel
-import com.example.todolist.viewmodel.ActivityViewModel
-import com.example.todolist.model.ActivityAdapter
-import com.example.todolist.model.ActivityDatabase
-import com.example.todolist.viewmodel.ActivityViewModelFactory
+import com.example.todolist.model.TaskModel
+import com.example.todolist.viewmodel.TaskViewModel
+import com.example.todolist.model.TaskAdapter
+import com.example.todolist.viewmodel.TaskViewModelFactory
 
 class MainActivity : AppCompatActivity() {
-
-    val database: ActivityDatabase by lazy{
-        ActivityDatabase.getDatabase(applicationContext)
-    }
-    private val activityViewModel: ActivityViewModel by lazy {
+    private val taskViewModel: TaskViewModel by lazy {
         val application = requireNotNull(this).application
-        val factory = ActivityViewModelFactory(application)
-        ViewModelProvider(this, factory).get(ActivityViewModel::class.java)
+        val factory = TaskViewModelFactory(application)
+        ViewModelProvider(this, factory)[TaskViewModel::class.java]
     }
-    private val adapter: ActivityAdapter by lazy{
-        ActivityAdapter(activityViewModel){
+    private val adapter: TaskAdapter by lazy{
+        TaskAdapter(taskViewModel){
                 activity ->
             showDeleteDialog(activity)
         }
@@ -42,7 +36,11 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.loading_page)
             setCancelable(false)
             show()
+            val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+            progressBar.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
+                progressBar.progress = 50
+                progressBar.visibility = View.GONE
                 dismiss()
             }, 2000)
         }
@@ -50,7 +48,6 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy{
         ActivityMainBinding.inflate(layoutInflater)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -65,20 +62,20 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
     private fun initSetup() {
-
-        //activityViewModel.deleteAllActivities()
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
         loadingDialog
         binding.floatingActionButton.setOnClickListener {
-            val dialog = AddTaskActivity()
+            binding.floatingActionButton.isEnabled = false
+            val dialog = AddTaskFragment()
             dialog.show(supportFragmentManager,"AddActivity")
-
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.floatingActionButton.isEnabled = true
+            }, 1000)
         }
-        activityViewModel.allActivities.observe(this, Observer { activities ->
-            if(activities.isNullOrEmpty()){
+        taskViewModel.allActivities.observe(this) { activities ->
+            if (activities.isNullOrEmpty()) {
                 binding.emptyMessage.visibility = View.VISIBLE
                 binding.tasks.visibility = View.GONE
             } else {
@@ -86,21 +83,18 @@ class MainActivity : AppCompatActivity() {
                 binding.tasks.visibility = View.VISIBLE
                 adapter.submitList(activities)
             }
-        })
+        }
     }
-
-    private fun showDeleteDialog(activity: ActivityModel){
+    private fun showDeleteDialog(activity: TaskModel){
         val dialogBinding = DialogDeleteActivityBinding.inflate(layoutInflater)
         val dialog = Dialog(this)
         dialog.setContentView(dialogBinding.root)
         dialog.setCancelable(true)
 
         dialogBinding.deleteButton.setOnClickListener{
-            activityViewModel.deleteActivity(activity)
+            taskViewModel.deleteActivity(activity)
             dialog.dismiss()
         }
         dialog.show()
     }
-
-
 }
