@@ -13,14 +13,15 @@ class TaskAdapter(
 ) : ListAdapter<TaskModel, TaskAdapter.ActivityViewHolder>(TaskDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
-        val binding = ViewTaskLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ViewTaskLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ActivityViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bind(currentItem)
-        holder.itemView.setOnLongClickListener{
+        holder.itemView.setOnLongClickListener {
             onItemLongClickListener(currentItem)
             true
         }
@@ -28,7 +29,8 @@ class TaskAdapter(
         holder.bind(activity)
     }
 
-    inner class ActivityViewHolder(private val binding: ViewTaskLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ActivityViewHolder(private val binding: ViewTaskLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(activity: TaskModel) {
             binding.titleTxt.text = activity.title
             binding.descTxt.text = activity.description

@@ -1,10 +1,12 @@
 package com.example.todolist.view
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.example.todolist.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.todolist.databinding.AddActivityBinding
 import com.example.todolist.model.TaskModel
@@ -47,13 +49,13 @@ class AddTaskFragment: BottomSheetDialogFragment() {
             )
             val newActivity = TaskModel(id, title, description, createDate, false)
             if (title.isBlank()) {
-                binding.AddTitle.hint = "Titulo é obrigatório"
+                binding.AddTitle.hint = getString(R.string.required)
             } else {
                 taskViewModel.addActivity(newActivity)
                 dismiss()
             }
         }
-        /*binding.addtask.viewTreeObserver.addOnGlobalLayoutListener {
+        binding.addtask.viewTreeObserver.addOnGlobalLayoutListener {
             val rect = Rect()
             binding.addtask.getWindowVisibleDisplayFrame(rect)
             val screenHeight = binding.addtask.rootView.height
@@ -63,7 +65,7 @@ class AddTaskFragment: BottomSheetDialogFragment() {
             } else {
                 binding.addtask.setPadding(0, 0, 0, 0)
             }
-        }*/
+        }
     }
 
     private fun getLocalizedPattern(locale: Locale = Locale.getDefault()): String {

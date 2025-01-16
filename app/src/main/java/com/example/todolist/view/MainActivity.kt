@@ -1,4 +1,5 @@
 package com.example.todolist.view
+
 import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
@@ -6,6 +7,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.R
 import com.example.todolist.databinding.ActivityMainBinding
-import com.example.todolist.databinding.DialogDeleteActivityBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.TaskViewModel
 import com.example.todolist.model.TaskAdapter
@@ -25,9 +26,8 @@ class MainActivity : AppCompatActivity() {
         val factory = TaskViewModelFactory(application)
         ViewModelProvider(this, factory)[TaskViewModel::class.java]
     }
-    private val adapter: TaskAdapter by lazy{
-        TaskAdapter(taskViewModel){
-                activity ->
+    private val adapter: TaskAdapter by lazy {
+        TaskAdapter(taskViewModel) { activity ->
             showDeleteDialog(activity)
         }
     }
@@ -39,22 +39,23 @@ class MainActivity : AppCompatActivity() {
             val progressBar = findViewById<ProgressBar>(R.id.progressBar)
             progressBar.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
-                progressBar.progress = 50
+                progressBar.progress = 75
                 progressBar.visibility = View.GONE
                 dismiss()
-            }, 2000)
+            }, 1000)
         }
     }
-    private val binding: ActivityMainBinding by lazy{
+    private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        loadingDialog
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
 
         initSetup()
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -62,14 +63,14 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     private fun initSetup() {
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
-        loadingDialog
         binding.floatingActionButton.setOnClickListener {
             binding.floatingActionButton.isEnabled = false
             val dialog = AddTaskFragment()
-            dialog.show(supportFragmentManager,"AddActivity")
+            dialog.show(supportFragmentManager, "AddActivity")
             Handler(Looper.getMainLooper()).postDelayed({
                 binding.floatingActionButton.isEnabled = true
             }, 1000)
@@ -85,16 +86,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun showDeleteDialog(activity: TaskModel){
-        val dialogBinding = DialogDeleteActivityBinding.inflate(layoutInflater)
-        val dialog = Dialog(this)
-        dialog.setContentView(dialogBinding.root)
-        dialog.setCancelable(true)
-
-        dialogBinding.deleteButton.setOnClickListener{
-            taskViewModel.deleteActivity(activity)
-            dialog.dismiss()
-        }
-        dialog.show()
+    private fun showDeleteDialog(activity: TaskModel) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.delete_btn_txt))
+            .setMessage(getString(R.string.delete_message))
+            .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                taskViewModel.deleteActivity(activity)
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.no)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }

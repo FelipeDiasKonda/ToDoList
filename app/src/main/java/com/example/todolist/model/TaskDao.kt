@@ -13,7 +13,7 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addActivity(activityModel: TaskModel)
 
-    @Query("SELECT * FROM activity_table ORDER by title ASC")
+    @Query("SELECT * FROM activity_table ORDER BY done ASC, created_date DESC")
     fun readAllData(): LiveData<List<TaskModel>>
 
     @Update

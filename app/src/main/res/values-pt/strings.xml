@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lista de Tarefas</string>
+    <string name="empty">Nenhuma tarefa</string>
+    <string name="add_activity">Adicionar Tarefa</string>
+    <string name="add_activity_title">Nova Atividade</string>
+    <string name="buttondescripton">adicionar</string>
+    <string name="headline_text">Lista de Tarefas</string>
+    <string name="button_description">botão adicionar</string>
+    <string name="item_hint">Título</string>
+    <string name="task_title_hint">Título</string>
+    <string name="task_description_hint">Descrição</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete_message">Você tem certeza que deseja excluir esta atividade?</string>
+    <string name="delete_btn_txt">Excluir</string>
+    <string name="description">Descrição</string>
+    <string name="created_date">Data de Criação</string>
+    <string name="feito">CONCLUÍDO</string>
+    <string name="required">Título é obrigatório</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+</resources>

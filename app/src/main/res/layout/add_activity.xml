@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="New Activity"
+            android:text="@string/add_activity_title"
             android:textSize="24sp"
             android:textStyle="bold"
             tools:ignore="HardcodedText" />
@@ -31,7 +31,6 @@
             android:background="@color/black"/>
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/viewLine"
@@ -45,10 +44,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#EAE4E8"
-                android:hint="Title"
+                android:hint="@string/item_hint"
                 app:hintTextColor="@color/black"
                 tools:ignore="HardcodedText">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/AddTittle2"
                     android:layout_width="match_parent"
@@ -60,10 +58,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#EAE4E8"
-                android:hint="Description"
+                android:hint="@string/task_description_hint"
                 app:hintTextColor="@color/black"
                 tools:ignore="HardcodedText">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/AddDesc2"
                     android:layout_width="match_parent"
@@ -81,7 +78,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/black"
-                android:text="Add Activity"
+                android:text="@string/add_activity"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
 
