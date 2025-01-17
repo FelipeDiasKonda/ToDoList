@@ -39,10 +39,9 @@ class MainActivity : AppCompatActivity() {
             val progressBar = findViewById<ProgressBar>(R.id.progressBar)
             progressBar.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
-                progressBar.progress = 75
                 progressBar.visibility = View.GONE
                 dismiss()
-            }, 1000)
+            }, 2000)
         }
     }
     private val binding: ActivityMainBinding by lazy {
@@ -62,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSetup() {
-        loadingDialog
+        loadingDialog.show()
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
         binding.floatingActionButton.setOnClickListener {
@@ -74,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             }, 1000)
         }
         taskViewModel.allActivities.observe(this) { activities ->
+            loadingDialog.dismiss()
             if (activities.isNullOrEmpty()) {
                 binding.emptyMessage.visibility = View.VISIBLE
                 binding.tasks.visibility = View.GONE
