@@ -52,7 +52,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                 it.layoutParams.height = (resources.displayMetrics.heightPixels * 0.4).toInt()
                 behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                     override fun onStateChanged(bottomSheet: View, newState: Int) {
-                        if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                        if (newState == BottomSheetBehavior.STATE_HIDDEN || newState == BottomSheetBehavior.STATE_COLLAPSED) {
                             dismiss()
                         }
                     }
@@ -64,7 +64,6 @@ class AddTaskFragment : BottomSheetDialogFragment() {
         }
         return dialog
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
