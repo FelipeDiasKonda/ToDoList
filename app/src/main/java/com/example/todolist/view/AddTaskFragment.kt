@@ -49,7 +49,17 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.peekHeight = 0
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                it.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                it.layoutParams.height = (resources.displayMetrics.heightPixels * 0.4).toInt()
+                behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                    override fun onStateChanged(bottomSheet: View, newState: Int) {
+                        if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                            dismiss()
+                        }
+                    }
+
+                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    }
+                })
             }
         }
         return dialog
