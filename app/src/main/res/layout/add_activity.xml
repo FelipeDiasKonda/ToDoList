@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/addtask"
@@ -23,76 +22,78 @@
             android:text="@string/add_activity_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:ignore="HardcodedText"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <View
             android:id="@+id/viewLine"
             android:layout_width="0dp"
             android:layout_height="3dp"
             android:background="@color/black"
-            app:layout_constraintTop_toBottomOf="@+id/newTask"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/newTask" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/AddTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
             android:background="#EAE4E8"
             android:hint="@string/item_hint"
             app:hintTextColor="@color/black"
-            tools:ignore="HardcodedText"
-            app:layout_constraintTop_toBottomOf="@+id/viewLine"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewLine"
+            tools:ignore="HardcodedText">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/AddTittle2"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:inputType="text"/>
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/AddDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
             android:background="#EAE4E8"
             android:hint="@string/task_description_hint"
             app:hintTextColor="@color/black"
-            tools:ignore="HardcodedText"
-            app:layout_constraintTop_toBottomOf="@+id/AddTitle"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AddTitle"
+            tools:ignore="HardcodedText">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/AddDesc2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
+                android:inputType="textMultiLine"
                 android:lines="3"
-                android:maxLines="3"
-                android:inputType="textMultiLine"/>
+                android:maxLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/addActivityBtn"
             android:layout_width="0dp"
             android:layout_height="?actionBarSize"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="@color/black"
             android:text="@string/add_activity"
             android:textSize="18sp"
-            tools:ignore="HardcodedText"
-            app:layout_constraintTop_toBottomOf="@+id/AddDesc"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AddDesc"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

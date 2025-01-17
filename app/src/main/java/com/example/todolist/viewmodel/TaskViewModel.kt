@@ -22,13 +22,6 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
         allActivities = repository.readAlLData()
     }
 
-    fun addActivity(activity: TaskModel) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                repository.addActivity(activity)
-            }
-        }
-    }
 
     fun completeActivity(activity: TaskModel) {
         activity.done = true

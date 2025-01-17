@@ -1,6 +1,5 @@
 package com.example.todolist.view
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,23 +9,23 @@ import com.example.todolist.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.todolist.databinding.AddActivityBinding
 import com.example.todolist.model.TaskModel
-import com.example.todolist.viewmodel.TaskViewModel
+import com.example.todolist.viewmodel.AddTaskViewModel
 import com.example.todolist.viewmodel.TaskViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-class AddTaskFragment: BottomSheetDialogFragment() {
+class AddTaskFragment : BottomSheetDialogFragment() {
 
     private val binding: AddActivityBinding by lazy {
         AddActivityBinding.inflate(layoutInflater)
     }
 
-    private val taskViewModel: TaskViewModel by lazy {
+    private val addTaskViewModel: AddTaskViewModel by lazy {
         val application = requireNotNull(this.activity).application
         val factory = TaskViewModelFactory(application)
-        ViewModelProvider(this, factory)[TaskViewModel::class.java]
+        ViewModelProvider(this, factory)[AddTaskViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -51,19 +50,8 @@ class AddTaskFragment: BottomSheetDialogFragment() {
             if (title.isBlank()) {
                 binding.AddTitle.hint = getString(R.string.required)
             } else {
-                taskViewModel.addActivity(newActivity)
+                addTaskViewModel.addActivity(newActivity)
                 dismiss()
-            }
-        }
-        binding.addtask.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = Rect()
-            binding.addtask.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = binding.addtask.rootView.height
-            val keypadHeight = screenHeight - rect.bottom
-            if (keypadHeight > screenHeight * 0.15) {
-                binding.addtask.setPadding(0, 0, 0, keypadHeight + 3)
-            } else {
-                binding.addtask.setPadding(0, 0, 0, 0)
             }
         }
     }
@@ -76,3 +64,4 @@ class AddTaskFragment: BottomSheetDialogFragment() {
         }
     }
 }
+

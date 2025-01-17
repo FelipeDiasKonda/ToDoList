@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        loadingDialog
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -63,6 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSetup() {
+        loadingDialog
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
         binding.floatingActionButton.setOnClickListener {
