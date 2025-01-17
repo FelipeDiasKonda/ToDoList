@@ -1,14 +1,11 @@
 package com.example.todolist.view
 
 import android.app.Dialog
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
