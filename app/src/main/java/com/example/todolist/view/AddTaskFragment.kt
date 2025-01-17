@@ -1,9 +1,14 @@
 package com.example.todolist.view
 
+import android.app.Dialog
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.ViewModelProvider
 import com.example.todolist.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -11,6 +16,8 @@ import com.example.todolist.databinding.AddActivityBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.AddTaskViewModel
 import com.example.todolist.viewmodel.TaskViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -33,6 +40,22 @@ class AddTaskFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         return binding.root
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.setOnShowListener { dialogInterface ->
+            val bottomSheetDialog = dialogInterface as BottomSheetDialog
+            val bottomSheet =
+                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
+            bottomSheet?.let {
+                val behavior = BottomSheetBehavior.from(it)
+                behavior.peekHeight = 0
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                it.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            }
+        }
+        return dialog
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
