@@ -2,14 +2,13 @@ package com.example.todolist.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
 import java.util.UUID
 
 @Entity(tableName = "activity_table")
-data class ActivityModel(
+data class TaskModel(
     @PrimaryKey val id: UUID,
-    val Title: String,
-    val Description: String,
-    val CreatedDate: String,
-    var Done: Boolean,
+    val title: String,
+    val description: String,
+    val created_date: String,
+    var done: Boolean,
 )

@@ -1,30 +1,27 @@
 package com.example.todolist.model
 
-import ActivityDiffCallback
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.databinding.ViewTaskLayoutBinding
-import com.example.todolist.viewmodel.ActivityViewModel
+import com.example.todolist.viewmodel.TaskViewModel
 
-class ActivityAdapter(
-    private val activityViewModel: ActivityViewModel,
-    private val onItemLongClickListener: (ActivityModel) -> Unit
-) : ListAdapter<ActivityModel, ActivityAdapter.ActivityViewHolder>(ActivityDiffCallback()) {
-
-    private val activityList = ArrayList<ActivityModel>()
+class TaskAdapter(
+    private val taskViewModel: TaskViewModel,
+    private val onItemLongClickListener: (TaskModel) -> Unit
+) : ListAdapter<TaskModel, TaskAdapter.ActivityViewHolder>(TaskDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {
-        val binding = ViewTaskLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ViewTaskLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ActivityViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ActivityViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bind(currentItem)
-        holder.itemView.setOnLongClickListener{
+        holder.itemView.setOnLongClickListener {
             onItemLongClickListener(currentItem)
             true
         }
@@ -32,24 +29,24 @@ class ActivityAdapter(
         holder.bind(activity)
     }
 
-    inner class ActivityViewHolder(private val binding: ViewTaskLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(activity: ActivityModel) {
-            binding.titleTxt.text = activity.Title
-            binding.descTxt.text = activity.Description
-            binding.Createdate.text = activity.CreatedDate
+    inner class ActivityViewHolder(private val binding: ViewTaskLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(activity: TaskModel) {
+            binding.titleTxt.text = activity.title
+            binding.descTxt.text = activity.description
+            binding.Createdate.text = activity.created_date
             binding.checkBox.setOnCheckedChangeListener(null)
-            binding.checkBox.isChecked = activity.Done
+            binding.checkBox.isChecked = activity.done
 
             binding.root.setOnClickListener {
                 binding.checkBox.isChecked = !binding.checkBox.isChecked
             }
 
-
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    activityViewModel.completeActivity(activity)
+                    taskViewModel.completeActivity(activity)
                 } else {
-                    activityViewModel.undoActivity(activity)
+                    taskViewModel.undoActivity(activity)
                 }
             }
 
