@@ -15,6 +15,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: TaskRepository
     val allActivities: LiveData<List<TaskModel>>
+    private val defaultDispatcher = Dispatchers.IO
 
     init {
         val dao = TaskDatabase.getDatabase(application).activityDao()
@@ -26,7 +27,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     fun completeActivity(activity: TaskModel) {
         activity.done = true
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(defaultDispatcher) {
                 repository.updateActivity(activity)
             }
         }
@@ -36,7 +37,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     fun undoActivity(activity: TaskModel) {
         activity.done = false
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(defaultDispatcher) {
                 repository.updateActivity(activity)
             }
         }
@@ -44,7 +45,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteActivity(activity: TaskModel) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(defaultDispatcher) {
                 repository.deleteActivity(activity)
             }
         }

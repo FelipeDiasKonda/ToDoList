@@ -4,8 +4,8 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ProgressBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.R
 import com.example.todolist.databinding.ActivityMainBinding
+import com.example.todolist.databinding.LoadingPageBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.TaskViewModel
 import com.example.todolist.model.TaskAdapter
@@ -33,17 +34,18 @@ class MainActivity : AppCompatActivity() {
     }
     private val loadingDialog: Dialog by lazy {
         Dialog(this).apply {
-            setContentView(R.layout.loading_page)
+            val binding = LoadingPageBinding.inflate(LayoutInflater.from(context))
+            setContentView(binding.root)
             setCancelable(false)
             show()
-            val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-            progressBar.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
-                progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
                 dismiss()
             }, 2000)
         }
     }
+
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -53,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
         initSetup()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSetup() {
-        loadingDialog.show()
+        loadingDialog
         binding.tasks.layoutManager = LinearLayoutManager(this)
         binding.tasks.adapter = adapter
         binding.floatingActionButton.setOnClickListener {

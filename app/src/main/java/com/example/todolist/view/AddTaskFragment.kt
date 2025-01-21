@@ -42,10 +42,9 @@ class AddTaskFragment : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         dialog.setOnShowListener { dialogInterface ->
-            val bottomSheetDialog = dialogInterface as BottomSheetDialog
-            val bottomSheet =
-                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
-            bottomSheet?.let {
+            dialogInterface as BottomSheetDialog
+            val bottomSheet = binding.root.parent as FrameLayout
+            bottomSheet.let {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.peekHeight = 0
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
