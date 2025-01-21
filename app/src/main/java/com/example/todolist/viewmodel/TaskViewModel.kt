@@ -7,15 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.todolist.model.TaskDatabase
 import com.example.todolist.model.TaskModel
 import com.example.todolist.model.TaskRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TaskViewModel(application: Application) : AndroidViewModel(application) {
+class TaskViewModel(
+    application: Application,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : AndroidViewModel(application) {
 
     private val repository: TaskRepository
     val allActivities: LiveData<List<TaskModel>>
-    private val defaultDispatcher = Dispatchers.IO
 
     init {
         val dao = TaskDatabase.getDatabase(application).activityDao()
