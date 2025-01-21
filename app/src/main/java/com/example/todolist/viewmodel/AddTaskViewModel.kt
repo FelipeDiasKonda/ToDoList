@@ -13,13 +13,14 @@ import kotlinx.coroutines.withContext
 
 class AddTaskViewModel(application: Application): AndroidViewModel(application) {
     private val repository: TaskRepository
+    private val defaultDispatcher = Dispatchers.IO
     init{
         val dao = TaskDatabase.getDatabase(application).activityDao()
         repository = TaskRepository(dao)
     }
     fun addActivity(activity: TaskModel) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(defaultDispatcher) {
                 repository.addActivity(activity)
             }
         }
