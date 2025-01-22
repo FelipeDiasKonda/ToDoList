@@ -14,22 +14,19 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.R
-import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.databinding.LoadingPageBinding
+import com.example.todolist.databinding.TaskMainBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.TaskViewModel
 import com.example.todolist.model.TaskAdapter
-import com.example.todolist.viewmodel.TaskViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private val taskViewModel: TaskViewModel by lazy {
-        val application = requireNotNull(this).application
-        val factory = TaskViewModelFactory(application)
-        ViewModelProvider(this, factory)[TaskViewModel::class.java]
+        ViewModelProvider(this)[TaskViewModel::class.java]
     }
     private val adapter: TaskAdapter by lazy {
-        TaskAdapter(taskViewModel) { activity ->
-            showDeleteDialog(activity)
+        TaskAdapter(taskViewModel) { task ->
+            showDeleteDialog(task)
         }
     }
     private val loadingDialog: Dialog by lazy {
@@ -46,8 +43,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
+    private val binding: TaskMainBinding by lazy {
+        TaskMainBinding.inflate(layoutInflater)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,26 +71,26 @@ class MainActivity : AppCompatActivity() {
                 binding.floatingActionButton.isEnabled = true
             }, 1000)
         }
-        taskViewModel.allActivities.observe(this) { activities ->
+        taskViewModel.allTasks.observe(this) { tasks ->
             loadingDialog.dismiss()
-            if (activities.isNullOrEmpty()) {
+            if (tasks.isNullOrEmpty()) {
                 binding.emptyMessage.visibility = View.VISIBLE
                 binding.tasks.visibility = View.GONE
             } else {
                 binding.emptyMessage.visibility = View.GONE
                 binding.tasks.visibility = View.VISIBLE
-                adapter.submitList(activities){
+                adapter.submitList(tasks){
                     binding.tasks.scrollToPosition(0)
                 }
             }
         }
     }
-    private fun showDeleteDialog(activity: TaskModel) {
+    private fun showDeleteDialog(task: TaskModel) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.delete_btn_txt))
             .setMessage(getString(R.string.delete_message))
             .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
-                taskViewModel.deleteActivity(activity)
+                taskViewModel.deleteTask(task)
                 dialog.dismiss()
             }
             .setNegativeButton(getString(R.string.no)) { dialog, _ ->

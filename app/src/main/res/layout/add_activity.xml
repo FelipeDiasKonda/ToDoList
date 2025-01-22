@@ -8,7 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="10dp"
-    app:cardBackgroundColor="@color/white"
     app:cardElevation="10dp">
 
     <ScrollView
@@ -35,27 +34,16 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
 
-            <View
-                android:id="@+id/viewLine"
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/newTask" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/AddTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:background="#EAE4E8"
                 android:hint="@string/item_hint"
-                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewLine"
+                app:layout_constraintTop_toBottomOf="@id/newTask"
                 tools:ignore="HardcodedText">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -71,9 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:background="#EAE4E8"
                 android:hint="@string/task_description_hint"
-                app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/AddTitle"
@@ -95,7 +81,6 @@
                 android:layout_height="?actionBarSize"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/black"
                 android:text="@string/add_activity"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"

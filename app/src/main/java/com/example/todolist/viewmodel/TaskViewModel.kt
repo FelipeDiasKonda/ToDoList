@@ -7,50 +7,43 @@ import androidx.lifecycle.viewModelScope
 import com.example.todolist.model.TaskDatabase
 import com.example.todolist.model.TaskModel
 import com.example.todolist.model.TaskRepository
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 
 class TaskViewModel(
     application: Application,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : AndroidViewModel(application) {
 
     private val repository: TaskRepository
-    val allActivities: LiveData<List<TaskModel>>
+    val allTasks: LiveData<List<TaskModel>>
 
     init {
-        val dao = TaskDatabase.getDatabase(application).activityDao()
+        val dao = TaskDatabase(application).activityDao()
         repository = TaskRepository(dao)
-        allActivities = repository.readAlLData()
+        allTasks = repository.readAlLData()
     }
 
 
-    fun completeActivity(activity: TaskModel) {
+    fun completeTask(activity: TaskModel) {
         activity.done = true
         viewModelScope.launch {
-            withContext(defaultDispatcher) {
-                repository.updateActivity(activity)
-            }
+            repository.updateTask(activity)
         }
     }
 
 
-    fun undoActivity(activity: TaskModel) {
-        activity.done = false
+    fun undoTask(task: TaskModel) {
+        task.done = false
         viewModelScope.launch {
-            withContext(defaultDispatcher) {
-                repository.updateActivity(activity)
-            }
+            repository.updateTask(task)
         }
     }
 
-    fun deleteActivity(activity: TaskModel) {
+    fun deleteTask(task: TaskModel) {
         viewModelScope.launch {
-            withContext(defaultDispatcher) {
-                repository.deleteActivity(activity)
-            }
+
+            repository.deleteTask(task)
+
         }
     }
 

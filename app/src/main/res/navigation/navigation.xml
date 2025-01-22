@@ -8,5 +8,5 @@
         android:id="@+id/mainActivity"
         android:name="com.example.todolist.view.MainActivity"
         android:label="activity_main"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/task_main" />
 </navigation>

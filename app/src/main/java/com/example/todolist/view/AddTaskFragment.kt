@@ -12,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.todolist.databinding.AddActivityBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.AddTaskViewModel
-import com.example.todolist.viewmodel.TaskViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.text.SimpleDateFormat
@@ -27,9 +26,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
     }
 
     private val addTaskViewModel: AddTaskViewModel by lazy {
-        val application = requireNotNull(this.activity).application
-        val factory = TaskViewModelFactory(application)
-        ViewModelProvider(this, factory)[AddTaskViewModel::class.java]
+        ViewModelProvider(this)[AddTaskViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -56,8 +53,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                         }
                     }
 
-                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    }
+                    override fun onSlide(bottomSheet: View, slideOffset: Float) {}
                 })
             }
         }
@@ -79,7 +75,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
             if (title.isBlank()) {
                 binding.AddTitle.hint = getString(R.string.required)
             } else {
-                addTaskViewModel.addActivity(newActivity)
+                addTaskViewModel.addTask(newActivity)
                 dismiss()
             }
         }

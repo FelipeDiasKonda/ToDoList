@@ -11,23 +11,16 @@ abstract class TaskDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: TaskDatabase? = null
+        private var instance: TaskDatabase? = null
 
-        fun getDatabase(context: Context): TaskDatabase {
-            val tempInstance = INSTANCE
-            if (tempInstance != null) {
-                return tempInstance
-            }
-            synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    TaskDatabase::class.java,
-                    "activity_database"
-                ).build()
-                INSTANCE = instance
-                return instance
-            }
-
+        operator fun invoke(context: Context): TaskDatabase = instance ?: synchronized(this) {
+            Room.databaseBuilder(
+                context.applicationContext,
+                TaskDatabase::class.java,
+                "task_table"
+            ).build()
+        }.also {
+            instance = it
         }
     }
 }
