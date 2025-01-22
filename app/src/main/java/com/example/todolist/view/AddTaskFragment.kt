@@ -63,7 +63,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addActivityBtn.setOnClickListener {
+        binding.addTaskBtn.setOnClickListener {
             val id: UUID = UUID.randomUUID()
             val title = binding.AddTittle2.text.toString()
             val description = binding.AddDesc2.text.toString()
@@ -71,11 +71,11 @@ class AddTaskFragment : BottomSheetDialogFragment() {
             val createDate = SimpleDateFormat(pattern, Locale.getDefault()).format(
                 Date()
             )
-            val newActivity = TaskModel(id, title, description, createDate, false)
+            val newTask = TaskModel(id, title, description, createDate, false)
             if (title.isBlank()) {
                 binding.AddTitle.hint = getString(R.string.required)
             } else {
-                addTaskViewModel.addTask(newActivity)
+                addTaskViewModel.addTask(newTask)
                 dismiss()
             }
         }

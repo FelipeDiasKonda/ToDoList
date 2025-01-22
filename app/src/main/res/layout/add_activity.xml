@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:text="@string/add_activity_title"
+                android:text="@string/add_task_title"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,12 +76,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/addActivityBtn"
+                android:id="@+id/addTaskBtn"
                 android:layout_width="0dp"
                 android:layout_height="?actionBarSize"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/add_activity"
+                android:text="@string/add_task"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

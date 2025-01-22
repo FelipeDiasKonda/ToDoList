@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         binding.floatingActionButton.setOnClickListener {
             binding.floatingActionButton.isEnabled = false
             val dialog = AddTaskFragment()
-            dialog.show(supportFragmentManager, "AddActivity")
+            dialog.show(supportFragmentManager, "AddTask")
             Handler(Looper.getMainLooper()).postDelayed({
                 binding.floatingActionButton.isEnabled = true
             }, 1000)
