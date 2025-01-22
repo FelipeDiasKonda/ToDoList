@@ -12,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.todolist.databinding.AddActivityBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.AddTaskViewModel
-import com.example.todolist.viewmodel.TaskViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.text.SimpleDateFormat
@@ -27,9 +26,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
     }
 
     private val addTaskViewModel: AddTaskViewModel by lazy {
-        val application = requireNotNull(this.activity).application
-        val factory = TaskViewModelFactory(application)
-        ViewModelProvider(this, factory)[AddTaskViewModel::class.java]
+        ViewModelProvider(this)[AddTaskViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -42,10 +39,9 @@ class AddTaskFragment : BottomSheetDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         dialog.setOnShowListener { dialogInterface ->
-            val bottomSheetDialog = dialogInterface as BottomSheetDialog
-            val bottomSheet =
-                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
-            bottomSheet?.let {
+            dialogInterface as BottomSheetDialog
+            val bottomSheet = binding.root.parent as FrameLayout
+            bottomSheet.let {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.peekHeight = 0
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -57,8 +53,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
                         }
                     }
 
-                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    }
+                    override fun onSlide(bottomSheet: View, slideOffset: Float) {}
                 })
             }
         }
@@ -68,7 +63,7 @@ class AddTaskFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addActivityBtn.setOnClickListener {
+        binding.addTaskBtn.setOnClickListener {
             val id: UUID = UUID.randomUUID()
             val title = binding.AddTittle2.text.toString()
             val description = binding.AddDesc2.text.toString()
@@ -76,11 +71,11 @@ class AddTaskFragment : BottomSheetDialogFragment() {
             val createDate = SimpleDateFormat(pattern, Locale.getDefault()).format(
                 Date()
             )
-            val newActivity = TaskModel(id, title, description, createDate, false)
+            val newTask = TaskModel(id, title, description, createDate, false)
             if (title.isBlank()) {
                 binding.AddTitle.hint = getString(R.string.required)
             } else {
-                addTaskViewModel.addActivity(newActivity)
+                addTaskViewModel.addTask(newTask)
                 dismiss()
             }
         }

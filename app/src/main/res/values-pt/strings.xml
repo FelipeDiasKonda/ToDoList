@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Lista de Tarefas</string>
     <string name="empty">Nenhuma tarefa</string>
-    <string name="add_activity">Adicionar Tarefa</string>
-    <string name="add_activity_title">Nova Atividade</string>
+    <string name="add_task">Adicionar Tarefa</string>
+    <string name="add_task_title">Nova Atividade</string>
     <string name="buttondescripton">adicionar</string>
     <string name="headline_text">Lista de Tarefas</string>
     <string name="button_description">botão adicionar</string>

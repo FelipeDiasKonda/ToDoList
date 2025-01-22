@@ -31,12 +31,12 @@ class TaskAdapter(
 
     inner class ActivityViewHolder(private val binding: ViewTaskLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(activity: TaskModel) {
-            binding.titleTxt.text = activity.title
-            binding.descTxt.text = activity.description
-            binding.Createdate.text = activity.created_date
+        fun bind(task: TaskModel) {
+            binding.titleTxt.text = task.title
+            binding.descTxt.text = task.description
+            binding.Createdate.text = task.created_date
             binding.checkBox.setOnCheckedChangeListener(null)
-            binding.checkBox.isChecked = activity.done
+            binding.checkBox.isChecked = task.done
 
             binding.root.setOnClickListener {
                 binding.checkBox.isChecked = !binding.checkBox.isChecked
@@ -44,9 +44,9 @@ class TaskAdapter(
 
             binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    taskViewModel.completeActivity(activity)
+                    taskViewModel.completeTask(task)
                 } else {
-                    taskViewModel.undoActivity(activity)
+                    taskViewModel.undoTask(task)
                 }
             }
 

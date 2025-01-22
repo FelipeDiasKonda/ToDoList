@@ -11,18 +11,16 @@ import androidx.room.Update
 @Dao
 interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addActivity(activityModel: TaskModel)
+    suspend fun addTask(activityModel: TaskModel)
 
-    @Query("SELECT * FROM activity_table ORDER BY done ASC, created_date DESC")
+    @Query("SELECT * FROM task_table ORDER BY is_done ASC, created_date DESC")
     fun readAllData(): LiveData<List<TaskModel>>
 
     @Update
-    suspend fun updateActivity(activityModel: TaskModel)
+    suspend fun updateTask(taskModel: TaskModel)
 
     @Delete
-    suspend fun deleteActivity(activityModel: TaskModel)
+    suspend fun deleteTask(taskModel: TaskModel)
 
-    @Query("DELETE FROM activity_table")
-    suspend fun deleteAllActivities()
 
 }
